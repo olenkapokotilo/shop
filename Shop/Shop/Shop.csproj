@@ -67,8 +67,12 @@
   <ItemGroup>
     <Content Include="css\style.css" />
     <Content Include="images\basket-icon.png" />
+    <Content Include="images\item.png" />
+    <Content Include="images\search-16.png" />
+    <Content Include="images\search.png" />
     <Content Include="images\White-Background.jpg" />
     <Content Include="index.html" />
+    <Content Include="js\app.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

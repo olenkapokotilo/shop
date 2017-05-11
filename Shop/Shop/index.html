@@ -2,13 +2,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='css/style.css' rel='stylesheet' type='text/css' />
 </head>
     <body>
         <header>
             <div><p>awesome shopping cart</p></div>
-            <div class="basket"><p>card items {{count}}</p><img src="images/basket-icon.png" /></div>
+            <div class="basket"><p>card items {{count}}</p><img src="images/basket-icon.png" alt="basket" /></div>
         </header>
+        <div class="content">
 
+            <div class="searching">
+                <input type="text"/>
+                <button class="search-btn transparent-btn"><img src="images/search-16.png" alt="search" /></button>
+            </div>
+
+            <div class="sorting"><span>sort by:</span>
+                <select>
+                    <option selected>cost</option>
+                    <option>name</option>
+                </select>
+            </div>
+           
+            <div class="grid">
+                
+                <div class="col-lg-3">
+                    <div class="grid-item">
+                        <p class="name-item">{{item-name}}</p>
+                        <img src="images/item.png" alt="item" />
+                        <div class="quantity">
+                            <span>quantity {{count}}</span>
+                            <button class="transparent-btn">+</button>
+                            <button class="transparent-btn">-</button>
+                        </div>
+                        <div class="price">
+                            <span> {{price}}$</span>
+                            <button class="transparent-btn">buy</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </body>
 </html>
