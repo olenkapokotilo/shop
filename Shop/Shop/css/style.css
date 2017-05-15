@@ -95,7 +95,7 @@ header p, header div{display: inline-block}
     z-index: 10;
     margin-top:20px;
     padding:20px;
-    height: 90vh;
+    height: 70vh;
     width: 100%;
     background-color: rgba(229, 229, 229, 0.57);    
     font-size: 10px;
@@ -130,13 +130,19 @@ header p, header div{display: inline-block}
     width: 90%;
     position: absolute;
     bottom: 3px;
+    font-size: 25px;
+    margin: 0;
 }
 .price button {
     color: #5cba47;
     font-weight: bold;
     float: right;
 }
-
+.quantity{display: inline}
+.quantity button {
+    font-size: 25px;
+    margin-right: 15px;
+}
 /*-----------------Responsive grid---------------------------*/
 /********** Large devices only **********/
 @media (min-width: 1200px) {

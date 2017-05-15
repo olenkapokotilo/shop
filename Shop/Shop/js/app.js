@@ -16,18 +16,27 @@ Event.prototype = {
 };
 // MODEL
 function ListModel(items) {
-    this._items = items;    //TODO: add product model
-    this.selectedItems = new Array();
-    this.basketCount = 0;
-    this.addItemToBasket = new Event(this);
-   
+    var self = this;
+    self._items = new Array();
+    self.selectedItems = new Array();
+    self.basketCount = 0;
+    self.addItemToBasket = new Event(self);
+
+    if (items) {
+        items.forEach(function (element) {
+            var product = new Product(element);
+            self._items.push(product);
+        });
+    };  
 }
 ListModel.prototype = {
+    getItems : function () {
+        return [].concat(this._items);
+    },
     addItem: function (item) {
-        this.selectedItems.push(item);
+        this.selectedItems.push(item);//TODO: src
         this.addItemToBasket.notify({ item: item });
     }
-   
 };
 
 // VIEW
@@ -48,9 +57,79 @@ function ListView(model, element) {
     };
 }
 ListView.prototype = {
+    show : function () {
+        this.buildList();
+    },
+    buildList : function () {
+        var list, items, key;
+        list = this._element.list; 
+        items = this._model.getItems();
+        for (key in items) {
+            if (items.hasOwnProperty(key)) {
+                var image = document.createElement("img");
+                image.alt = items[key].name;
+                if (image.complete) {
+                    image.src = items[key].src;
+                    var name = document.createElement("p");
+                    name.innerHTML = items[key].name;
+                    name.className = "name-item";
+                    var quantity = document.createElement("p");
+                    quantity.className = "quantity";
+                    quantity.innerHTML = "quantity";
+
+                    var quantityValue = document.createElement("span");
+                    quantityValue.name = "quantity";
+                    quantityValue.innerHTML = items[key].quantity;
+
+                    var plusBtn = document.createElement("button");
+                    plusBtn.className = "transparent-btn";
+                    plusBtn.name = "plus";
+                    plusBtn.innerHTML = "+";
+
+                    var minusBtn = document.createElement("button");
+                    minusBtn.className = "transparent-btn";
+                    minusBtn.name = "minus";
+                    minusBtn.innerHTML = "-";
+                    quantity.appendChild(quantityValue);
+                    quantity.appendChild(plusBtn);
+                    quantity.appendChild(minusBtn);
+
+                    var price = document.createElement("p");
+                    price.className = "price";
+
+                    var priceValue = document.createElement("span");
+                    priceValue.name = "price";
+                    priceValue.innerHTML = items[key].price + "$";
+
+                    var buyBtn = document.createElement("button");
+                    buyBtn.className = "transparent-btn";
+                    buyBtn.name = "buy";
+                    buyBtn.innerHTML = "buy";
+                    price.appendChild(priceValue);
+                    price.appendChild(buyBtn);
+
+                    var gridItem = document.createElement("div");
+                    gridItem.className = "grid-item";
+                    gridItem.appendChild(name);
+
+                    gridItem.appendChild(image);
+                    gridItem.appendChild(quantity);
+                    gridItem.appendChild(price);
+
+                    var wrap = document.createElement("div");
+                    wrap.className = "col-lg-3";
+                    wrap.appendChild(gridItem);
+                    list.appendChild(wrap);
+
+                };
+            }
+        }
+        
+    },
+
     basketCount: function () {
         var quantityString, basketCountString, basketCount;
-        quantityString = "quantity";
+        quantityString = "quantity"; //TODO: minus quantity and if(quantity<=0)
         basketCountString = "card items";
         document.querySelectorAll('.basket p')[0].innerHTML = basketCountString + " " + this._model.selectedItems.length;
     }
@@ -58,37 +137,40 @@ ListView.prototype = {
 
 // CONTROLLER
 function ListController(model, view) {
-    this._model = model;
-    this._view = view;
     var self = this;
+    self._model = model;
+    self._view = view;
     
-    this._view.addButtonClicked.attach(function () {
+    
+    self._view.addButtonClicked.attach(function () {
         self.addItem();
     });
 }
 ListController.prototype = {
     addItem: function () {
-        var item = window.prompt('Add item:', '');
-        if (item) {
-            this._model.addItem(item);
-        }
+        var name = document.getElementsByClassName('name-item')[0].innerHTML;
+        var price = getFirstElementByName('price').innerHTML;
+        var quantity = getFirstElementByName('quantity').innerHTML;
+        this._model.addItem(new Product({'name': name, 'price': price, 'quantity': quantity}));
     }
 };
-
-function getFirstElementByName(element_name) {
-    var elements = document.getElementsByName(element_name);
+// TODO: queryselector 
+function getFirstElementByName(elementName) {
+    var elements = document.getElementsByName(elementName);
     if (elements.length) {
         return elements[0];
     } else {
         return undefined;
     }
 }
-// start
-//$(function () {
-//    var model = new ListModel(['bmw', 'reno']),
-//        view = new ListView(model, {
-//            'addButton': getFirstElementByName('plus')
-//        }),
-//        controller = new ListController(model, view);
 
-//});
+
+//produnct model
+function Product(item) { //TODO: ? (item) or (name, price...) 
+    var self = this;
+    self.id = item ? item.id : "";
+    self.name = item ? item.name : "";
+    self.price = item ? item.price : "";
+    self.quantity = item ? item.quantity : "";
+    self.src = item ? item.src : "";
+}
