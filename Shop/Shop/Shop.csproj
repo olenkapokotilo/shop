@@ -73,17 +73,17 @@
     <Content Include="images\White-Background.jpg" />
     <Content Include="index.html" />
     <Content Include="js\app.js" />
+    <Content Include="js\event.js" />
     <Content Include="js\jquery-2.1.4.min.js" />
+    <Content Include="js\mvc\controllers\productListController.js" />
+    <Content Include="js\mvc\models\productListModel.js" />
+    <Content Include="js\mvc\views\productListView.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="js\controllers\" />
-    <Folder Include="js\models\" />
-    <Folder Include="js\views\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
